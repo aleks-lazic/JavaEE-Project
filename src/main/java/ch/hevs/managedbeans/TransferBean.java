@@ -1,17 +1,5 @@
 package ch.hevs.managedbeans;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.faces.event.ValueChangeEvent;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
-import ch.hevs.bankservice.Bank;
-import ch.hevs.businessobject.Account;
-import ch.hevs.businessobject.Client;
-
 /**
  * TransferBean.java
  * 
@@ -19,6 +7,20 @@ import ch.hevs.businessobject.Client;
 
 public class TransferBean
 {
+	
+	private String colA = "colA test de la muerte";
+	private String colB = "colB test de la muerte 2 swag";
+	
+	public String getColA() {
+		return colA;
+	}
+	public String getColB() {
+		return colB;
+	}
+	
+	
+	
+	/*
     private List<Client> clients;
     private List<String> clientNames;
     private List<String> sourceAccountDescriptions;
@@ -39,18 +41,18 @@ public class TransferBean
 		bank = (Bank) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/BankBean!ch.hevs.bankservice.Bank");    	
 			
     	// get clients
-		List<Client> clientList = bank.getClients();
-		this.clientNames = new ArrayList<String>();
-		for (Client client : clientList) {
-			this.clientNames.add(client.getLastname());
-		}
+//		List<Client> clientList = bank.getClients();
+//		this.clientNames = new ArrayList<String>();
+//		for (Client client : clientList) {
+//			this.clientNames.add(client.getLastname());
+//		}
 		
 		// initialize account descriptions
 		this.sourceAccountDescriptions = new ArrayList<String>();
 		this.destinationAccountDescriptions = new ArrayList<String>();
-		List<Account> accounts = bank.getAccountListFromClientLastname(clientList.get(0).getLastname());
-		this.sourceAccountDescriptions.add(accounts.get(0).getDescription());
-		this.destinationAccountDescriptions.add(accounts.get(0).getDescription());
+		//List<Account> accounts = bank.getAccountListFromClientLastname(clientList.get(0).getLastname());
+		//this.sourceAccountDescriptions.add(accounts.get(0).getDescription());
+//		this.destinationAccountDescriptions.add(accounts.get(0).getDescription());
     }
     
     // transactionAmount
@@ -112,6 +114,7 @@ public class TransferBean
 		this.destinationAccountDescription = destinationAccountDescription;
 	}
 
+	/*
 	public void updateSourceAccounts(ValueChangeEvent event) {
     	this.sourceClientName = (String)event.getNewValue();
     	
@@ -121,6 +124,8 @@ public class TransferBean
 			this.sourceAccountDescriptions.add(account.getDescription());
 		}
     }
+
+	
 	public void updateDestinationAccounts(ValueChangeEvent event) {
     	this.destinationClientName = (String)event.getNewValue();
 			
@@ -130,6 +135,7 @@ public class TransferBean
 			this.destinationAccountDescriptions.add(account.getDescription());
 		}
     }
+	
 
     public List<Client> getClients() {
 		return clients;
@@ -159,7 +165,8 @@ public class TransferBean
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-
 		return "showTransferResult"; //  the String value returned represents the outcome used by the navigation handler to determine what page to display next.
 	} 
+	
+    */
 }
