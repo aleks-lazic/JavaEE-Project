@@ -16,6 +16,7 @@ public class BankBean implements Bank {
 //		query.setParameter("lastname", lastnameOwner);
 //		
 //		return (Account) query.getSingleResult();
+	
 //	}
 //	
 //	public List<Account> getAccountListFromClientLastname(String lastname) {

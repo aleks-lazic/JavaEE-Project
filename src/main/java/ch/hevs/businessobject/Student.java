@@ -28,6 +28,7 @@ public class Student {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy="student")
 	private List<Mark> marks;
+	
 
 	
 	public Student(){

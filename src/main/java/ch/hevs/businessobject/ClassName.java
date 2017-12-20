@@ -25,6 +25,7 @@ public class ClassName {
 	@OneToMany(mappedBy = "className")
 	private List<Student> students;
 
+	
 	public Long getId() {
 		return id;
 	}

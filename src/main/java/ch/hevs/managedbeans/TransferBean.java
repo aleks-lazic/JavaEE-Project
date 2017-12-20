@@ -20,6 +20,7 @@ public class TransferBean
 	
 	
 	
+	
 	/*
     private List<Client> clients;
     private List<String> clientNames;

@@ -25,6 +25,7 @@ public class PersistenceTest {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+	
 //
 //		ClassNameBean classNameBean = new ClassNameBean();
 //		List<ClassName> classNameList = classNameBean.getAllClassName();

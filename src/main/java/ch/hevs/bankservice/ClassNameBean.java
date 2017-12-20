@@ -20,6 +20,7 @@ public class ClassNameBean implements IClassName{
 		return (ClassName)em.createQuery("SELECT * FROM CLASSNAME c WHERE c.ID = id").setParameter("id", id).getSingleResult();
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ClassName> getAllClassName() {

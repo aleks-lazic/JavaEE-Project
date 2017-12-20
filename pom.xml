@@ -4,6 +4,7 @@
   <artifactId>TP12-WEB-EJB-PC-EPC-E</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
+  
 <!-- Keep this for running with the server -->
 <!-- <packaging>war</packaging>
   <dependencies>

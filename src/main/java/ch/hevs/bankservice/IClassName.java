@@ -14,4 +14,5 @@ public interface IClassName {
 	ClassName getClassName(Long id);
 	
 	List<ClassName> getAllClassName();
+	
 }

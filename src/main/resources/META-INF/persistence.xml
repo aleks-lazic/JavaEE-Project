@@ -5,6 +5,7 @@
                 http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 	version="1.0">
 
+
 	<!-- use those properties for normal run of the application -->
 <!-- 	<persistence-unit name="garagePU">
 		<jta-data-source>java:/labsDS</jta-data-source>

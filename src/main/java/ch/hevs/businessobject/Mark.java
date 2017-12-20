@@ -19,6 +19,7 @@ public class Mark {
 	private Student student;
 	@ManyToOne
 	private Subject subject;
+	
 
 	public Mark() {
 

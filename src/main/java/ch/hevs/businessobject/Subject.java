@@ -25,6 +25,7 @@ public class Subject {
 	@OneToMany(mappedBy = "subject")
 	private List<Mark> marks;
 	
+	
 	public Subject(){
 		
 	}
