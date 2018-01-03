@@ -17,14 +17,19 @@ public class ClassNameBean implements IClassName{
 	
 	@Override
 	public ClassName getClassName(Long id) {
-		return (ClassName)em.createQuery("SELECT * FROM CLASSNAME c WHERE c.ID = id").setParameter("id", id).getSingleResult();
+//		ClassName cn = (ClassName)em.createQuery("FROM " + ClassName.class.getName() + " c WHERE c.ID = :id").setParameter("id", id).getSingleResult();
+//		System.out.println(cn.toString());
+		ClassName cn = em.find(ClassName.class, id);
+		return cn;
 	}
 
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ClassName> getAllClassName() {
-		return (List<ClassName>)em.createQuery("SELECT * FROM CLASSNAME").getResultList();
+		List<ClassName> cns = (List<ClassName>)em.createQuery("SELECT c FROM " + ClassName.class.getName() + " c").getResultList();
+		System.out.println("CNS SIZE : " + cns.size());
+		return cns;
 	}
 
 	

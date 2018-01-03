@@ -21,21 +21,25 @@ public class ClassName {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private String name;
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToMany(mappedBy = "className")
-	private List<Student> students;
+	// @OnDelete(action = OnDeleteAction.CASCADE)
+	// @OneToMany(mappedBy = "className")
+	// private List<Student> students;
 
-	
+	public ClassName() {
+
+	}
+
+	public ClassName(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public ClassName() {
-
 	}
 
 	public String getName() {
@@ -45,13 +49,18 @@ public class ClassName {
 	public void setName(String name) {
 		this.name = name;
 	}
+	//
+	// public List<Student> getStudents() {
+	// return students;
+	// }
+	//
+	// public void setStudents(List<Student> students) {
+	// this.students = students;
+	// }
 
-	public List<Student> getStudents() {
-		return students;
-	}
-
-	public void setStudents(List<Student> students) {
-		this.students = students;
+	@Override
+	public String toString() {
+		return "ClassName [id=" + id + ", name=" + name + "]";
 	}
 
 }
