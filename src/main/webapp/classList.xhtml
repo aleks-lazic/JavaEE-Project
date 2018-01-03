@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:outputLabel value="Class lists"></h:outputLabel>
+		<br></br>
+		<ui:repeat var="item" value="#{transferBean.listClasses}">
+			<p>#{item.name}</p>
+			<h:dataTable value = "#{item.students}" var = "student">
+			   <h:column>
+			      <f:facet name = "header">Firstname</f:facet>
+			      #{student.firstname}
+			   </h:column>
+			   <h:column>
+			      <f:facet name = "header">Lastname</f:facet>
+			      #{student.lastname}
+			   </h:column>
+			</h:dataTable>
+		</ui:repeat>
+	</ui:define>
+</ui:composition>
+</html>

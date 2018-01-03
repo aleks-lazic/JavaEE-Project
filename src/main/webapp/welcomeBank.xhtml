@@ -5,26 +5,23 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-	
+
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:outputLabel value="School grade management"></h:outputLabel>
 		<br></br>
-			<h:dataTable value="#{transferBean}" var="data">
-				<h:column>
-					<f:facet name="header">Test</f:facet>
-    				#{data.colA}
-    			</h:column>
-				<h:column>
-					<f:facet name="header">Test 2</f:facet>	
-   					#{data.colB}
-   				</h:column>
-			</h:dataTable>
-		<br></br>
 		<h:form>
-     		<h:commandButton value="Fill DB" action="#{transferBean.fillDatabase}"></h:commandButton>
-     		<h:commandButton value="Clear DB" action="#{transferBean.clearDatabase}"></h:commandButton>
+			<h:commandButton value="Fill DB"
+				action="#{transferBean.fillDatabase}"></h:commandButton>
+			<h:commandButton value="Clear DB"
+				action="#{transferBean.clearDatabase}"></h:commandButton>
+			<h:commandLink action="classList">
+				<h:outputText value="Show class list" />
+			</h:commandLink>
+			<h:commandLink action="studentList">
+				<h:outputText value="Show student list" />
+			</h:commandLink>
 		</h:form>
 	</ui:define>
 </ui:composition>

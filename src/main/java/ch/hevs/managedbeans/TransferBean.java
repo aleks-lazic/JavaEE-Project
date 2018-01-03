@@ -7,7 +7,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import ch.hevs.bankservice.IClassName;
+import ch.hevs.bankservice.IStudent;
 import ch.hevs.businessobject.ClassName;
+import ch.hevs.businessobject.Student;
 
 /**
  * TransferBean.java
@@ -16,14 +18,12 @@ import ch.hevs.businessobject.ClassName;
 
 public class TransferBean {
 
-	//test
-	private String colA = "colA test de la muerte";
-	private String colB = "colB test de la muerte 2 swag";
-
 	//service interfaces
 	private IClassName iClassName;
+	private IStudent iStudent;
 	
-	private List<ClassName> classNames;
+	private List<ClassName> listClasses;
+	private List<Student> listStudents;
 	
 	@PostConstruct
     public void initialize() throws NamingException {
@@ -33,23 +33,15 @@ public class TransferBean {
     }
 	
 	public void fillDatabase(){
+		//fill the database
 		iClassName.fillDatabase();
-		classNames = iClassName.getAllClassName();
-		System.out.println(classNames.get(0).toString());
+		//get all classes for the school
+		listClasses = iClassName.getAllClassName();
 	}
 	
 	public void clearDatabase(){
 		iClassName.clearDatabase();
 	}
-	
-	public String getColA() {
-		return colA;
-	}
-
-	public String getColB() {
-		return colB;
-	}
-	
 	
 	public IClassName getiClassName() {
 		return iClassName;
@@ -57,6 +49,14 @@ public class TransferBean {
 	
 	public void setiClassName(IClassName iClassName) {
 		this.iClassName = iClassName;
+	}
+	
+	public List<ClassName> getListClasses() {
+		return listClasses;
+	}
+	
+	public void setListClasses(List<ClassName> listClasses) {
+		this.listClasses = listClasses;
 	}
 
 	/*

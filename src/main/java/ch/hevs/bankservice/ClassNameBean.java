@@ -31,7 +31,7 @@ public class ClassNameBean implements IClassName {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ClassName> getAllClassName() {
-		List<ClassName> cns = (List<ClassName>) em.createQuery("SELECT c FROM " + ClassName.class.getName() + " c")
+		List<ClassName> cns = (List<ClassName>) em.createQuery("FROM " + ClassName.class.getName() + " c")
 				.getResultList();
 		System.out.println("CNS SIZE : " + cns.size());
 		return cns;
@@ -39,25 +39,60 @@ public class ClassNameBean implements IClassName {
 
 	@Override
 	public void fillDatabase() {
-		ClassName className = new ClassName();
-		className.setName("605_F");
+		ClassName className1 = new ClassName();
+		ClassName className2 = new ClassName();
+		ClassName className3 = new ClassName();
+		className1.setName("605_F");
+		className2.setName("604_F");
+		className3.setName("603_F");
 
-		Subject subject = new Subject();
-		subject.setName("Math");
+		Subject subject1 = new Subject();
+		Subject subject2 = new Subject();
+		Subject subject3 = new Subject();
+		subject1.setName("Math");
+		subject2.setName("English");
+		subject3.setName("German");
 
-		Student student = new Student();
-		student.setFirstname("Flavien");
-		student.setLastname("Lazic");
-		student.setClassName(className);
+		Student student1 = new Student();
+		Student student2 = new Student();
+		Student student3 = new Student();
+		Student student4 = new Student();
+		Student student5 = new Student();
+		student1.setFirstname("Aleksandar");
+		student1.setLastname("Lazic");
+		student1.setClassName(className1);
+		student2.setFirstname("Flavien");
+		student2.setLastname("Bonvin");
+		student2.setClassName(className1);
+		student3.setFirstname("Hugo");
+		student3.setLastname("Rebelo");
+		student3.setClassName(className2);
+		student4.setFirstname("Kevin");
+		student4.setLastname("Schmidt");
+		student4.setClassName(className2);
+		student5.setFirstname("Rafael");
+		student5.setLastname("Peixoto");
+		student5.setClassName(className3);
 
 		Mark mark = new Mark();
 		mark.setValue(5.1);
-		mark.setStudent(student);
-		mark.setSubject(subject);
+		mark.setStudent(student1);
+		mark.setSubject(subject1);
 
-		em.persist(className);
-		em.persist(subject);
-		em.persist(student);
+		em.persist(className1);
+		em.persist(className2);
+		em.persist(className3);
+
+		em.persist(subject1);
+		em.persist(subject2);
+		em.persist(subject3);
+		
+		em.persist(student1);
+		em.persist(student2);
+		em.persist(student3);
+		em.persist(student4);
+		em.persist(student5);
+		
 		em.persist(mark);
 	}
 

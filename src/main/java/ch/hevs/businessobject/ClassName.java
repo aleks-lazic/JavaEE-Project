@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,9 +22,9 @@ public class ClassName {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private String name;
-	 @OnDelete(action = OnDeleteAction.CASCADE)
-	 @OneToMany(mappedBy = "className")
-	 private List<Student> students;
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "className", fetch = FetchType.EAGER)
+	private List<Student> students;
 
 	public ClassName() {
 
@@ -49,18 +50,22 @@ public class ClassName {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	 public List<Student> getStudents() {
-	 return students;
-	 }
-	
-	 public void setStudents(List<Student> students) {
-	 this.students = students;
-	 }
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
 
 	@Override
 	public String toString() {
-		return "ClassName [id=" + id + ", name=" + name + "]";
+		String s = "ClassName [id=" + id + ", name=" + name + ", students=\n" ;
+		for(int i = 0 ; i<students.size() ; i++){
+			s += "\t" + students.get(i).toString() + "\n";
+		}
+		return s;
 	}
 
 }
