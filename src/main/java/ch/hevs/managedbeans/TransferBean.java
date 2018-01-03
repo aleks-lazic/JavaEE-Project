@@ -23,21 +23,24 @@ public class TransferBean {
 	//service interfaces
 	private IClassName iClassName;
 	
+	private List<ClassName> classNames;
+	
 	@PostConstruct
     public void initialize() throws NamingException {
-    	
     	// use JNDI to inject reference to bank EJB
     	InitialContext ctx = new InitialContext();
 		iClassName = (IClassName) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");    	
-		
-		//get all class names
-    	 List<ClassName> classNames = iClassName.getAllClassName();
-    	 System.out.println(classNames.size());
-    	 
-//    	 //get class name by id
-//    	 ClassName cn = iClassName.getClassName(new Long(10));
-//    	 System.out.println("cn object : " + cn.toString());
     }
+	
+	public void fillDatabase(){
+		iClassName.fillDatabase();
+		classNames = iClassName.getAllClassName();
+		System.out.println(classNames.get(0).toString());
+	}
+	
+	public void clearDatabase(){
+		iClassName.clearDatabase();
+	}
 	
 	public String getColA() {
 		return colA;

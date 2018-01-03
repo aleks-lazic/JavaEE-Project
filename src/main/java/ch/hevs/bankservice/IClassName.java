@@ -15,4 +15,8 @@ public interface IClassName {
 	
 	List<ClassName> getAllClassName();
 	
+	void fillDatabase();
+	
+	void clearDatabase();
+	
 }

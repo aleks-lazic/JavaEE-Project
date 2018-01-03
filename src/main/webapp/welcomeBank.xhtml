@@ -23,9 +23,8 @@
 			</h:dataTable>
 		<br></br>
 		<h:form>
-			<h:commandLink action="transferForm">
-				<h:outputText value="Create new class" />
-			</h:commandLink>
+     		<h:commandButton value="Fill DB" action="#{transferBean.fillDatabase}"></h:commandButton>
+     		<h:commandButton value="Clear DB" action="#{transferBean.clearDatabase}"></h:commandButton>
 		</h:form>
 	</ui:define>
 </ui:composition>

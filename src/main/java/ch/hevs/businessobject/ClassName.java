@@ -21,9 +21,9 @@ public class ClassName {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private String name;
-	// @OnDelete(action = OnDeleteAction.CASCADE)
-	// @OneToMany(mappedBy = "className")
-	// private List<Student> students;
+	 @OnDelete(action = OnDeleteAction.CASCADE)
+	 @OneToMany(mappedBy = "className")
+	 private List<Student> students;
 
 	public ClassName() {
 
@@ -49,14 +49,14 @@ public class ClassName {
 	public void setName(String name) {
 		this.name = name;
 	}
-	//
-	// public List<Student> getStudents() {
-	// return students;
-	// }
-	//
-	// public void setStudents(List<Student> students) {
-	// this.students = students;
-	// }
+	
+	 public List<Student> getStudents() {
+	 return students;
+	 }
+	
+	 public void setStudents(List<Student> students) {
+	 this.students = students;
+	 }
 
 	@Override
 	public String toString() {
