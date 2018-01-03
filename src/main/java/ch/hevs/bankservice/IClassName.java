@@ -9,8 +9,6 @@ import ch.hevs.businessobject.*;
 @Local
 public interface IClassName {
 
-//	Account getAccount(String accountDescription, String lastnameOwner);
-
 	ClassName getClassName(Long id);
 	
 	List<ClassName> getAllClassName();

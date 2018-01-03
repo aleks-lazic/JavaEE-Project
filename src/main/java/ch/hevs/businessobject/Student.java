@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Student {
 	@ManyToOne
 	private ClassName className;
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToMany(mappedBy="student")
+	@OneToMany(mappedBy="student", fetch = FetchType.EAGER)
 	private List<Mark> marks;
 	
 

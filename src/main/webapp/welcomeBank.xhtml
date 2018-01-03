@@ -16,12 +16,16 @@
 				action="#{transferBean.fillDatabase}"></h:commandButton>
 			<h:commandButton value="Clear DB"
 				action="#{transferBean.clearDatabase}"></h:commandButton>
-			<h:commandLink action="classList">
-				<h:outputText value="Show class list" />
-			</h:commandLink>
-			<h:commandLink action="studentList">
-				<h:outputText value="Show student list" />
-			</h:commandLink>
+			<p>
+				<h:commandLink action="classList">
+					<h:outputText value="Show class list" />
+				</h:commandLink>
+			</p>
+			<p>
+				<h:commandLink action="studentList">
+					<h:outputText value="Show student list" />
+				</h:commandLink>
+			</p>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -5,18 +5,18 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:outputLabel value="Class lists"></h:outputLabel>
+		<h:outputLabel value="Students List"></h:outputLabel>
 		<br></br>
-		<ui:repeat var="item" value="#{transferBean.listClasses}">
-			<p>#{item.name}</p>
-			<h:dataTable value = "#{item.students}" var = "student">
-			   <h:column>
-			      <f:facet name = "header">Firstname</f:facet>
-			      #{student.firstname}
+		<ui:repeat var="item" value="#{transferBean.listStudents}">
+			<p>#{item.firstname} #{item.lastname} #{item.className.name}</p>
+			<h:dataTable value="#{item.marks}" var="mark">
+				<h:column>
+					<f:facet name="header">Subject name</f:facet>
+			      #{mark.subject.name}
 			   </h:column>
-			   <h:column>
-			      <f:facet name = "header">Lastname</f:facet>
-			      #{student.lastname}
+				<h:column>
+					<f:facet name="header">Mark grade</f:facet>
+			      #{mark.value}
 			   </h:column>
 			</h:dataTable>
 		</ui:repeat>

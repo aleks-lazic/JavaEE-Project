@@ -18,45 +18,58 @@ import ch.hevs.businessobject.Student;
 
 public class TransferBean {
 
-	//service interfaces
+	// service interfaces
 	private IClassName iClassName;
 	private IStudent iStudent;
-	
+
 	private List<ClassName> listClasses;
 	private List<Student> listStudents;
-	
+
 	@PostConstruct
-    public void initialize() throws NamingException {
-    	// use JNDI to inject reference to bank EJB
-    	InitialContext ctx = new InitialContext();
-		iClassName = (IClassName) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");    	
-    }
-	
-	public void fillDatabase(){
-		//fill the database
-		iClassName.fillDatabase();
-		//get all classes for the school
-		listClasses = iClassName.getAllClassName();
+	public void initialize() throws NamingException {
+		// use JNDI to inject reference to bank EJB
+		InitialContext ctx = new InitialContext();
+		iClassName = (IClassName) ctx.lookup(
+				"java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");
+		iStudent = (IStudent) ctx
+				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/StudentBean!ch.hevs.bankservice.IStudent");
 	}
-	
-	public void clearDatabase(){
+
+	public void fillDatabase() {
+		// fill the database
+		iClassName.fillDatabase();
+		// get all classes for the school
+		listClasses = iClassName.getAllClassName();
+		// get all students
+		listStudents = iStudent.getAllStudents();
+	}
+
+	public void clearDatabase() {
 		iClassName.clearDatabase();
 	}
-	
+
 	public IClassName getiClassName() {
 		return iClassName;
 	}
-	
+
 	public void setiClassName(IClassName iClassName) {
 		this.iClassName = iClassName;
 	}
-	
+
 	public List<ClassName> getListClasses() {
 		return listClasses;
 	}
-	
+
 	public void setListClasses(List<ClassName> listClasses) {
 		this.listClasses = listClasses;
+	}
+
+	public List<Student> getListStudents() {
+		return listStudents;
+	}
+
+	public void setListStudents(List<Student> listStudents) {
+		this.listStudents = listStudents;
 	}
 
 	/*
