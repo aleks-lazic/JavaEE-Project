@@ -86,13 +86,13 @@ public class ClassNameBean implements IClassName {
 		em.persist(subject1);
 		em.persist(subject2);
 		em.persist(subject3);
-		
+
 		em.persist(student1);
 		em.persist(student2);
 		em.persist(student3);
 		em.persist(student4);
 		em.persist(student5);
-		
+
 		em.persist(mark);
 	}
 
@@ -103,5 +103,13 @@ public class ClassNameBean implements IClassName {
 		Query q2 = em.createNativeQuery("DELETE FROM SUBJECT");
 		q.executeUpdate();
 		q2.executeUpdate();
+	}
+
+	@Override
+	public ClassName getClassByName(String name) {
+		// TODO Auto-generated method stub
+		Query query = em.createQuery("FROM " + ClassName.class.getName() + " s WHERE s.name = :name");
+		query.setParameter("name", name);
+		return (ClassName) query.getSingleResult();
 	}
 }

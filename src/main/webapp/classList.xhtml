@@ -9,17 +9,25 @@
 		<br></br>
 		<ui:repeat var="item" value="#{transferBean.listClasses}">
 			<p>#{item.name}</p>
-			<h:dataTable value = "#{item.students}" var = "student">
-			   <h:column>
-			      <f:facet name = "header">Firstname</f:facet>
+			<h:dataTable value="#{item.students}" var="student">
+				<h:column>
+					<f:facet name="header">Firstname</f:facet>
 			      #{student.firstname}
 			   </h:column>
-			   <h:column>
-			      <f:facet name = "header">Lastname</f:facet>
+				<h:column>
+					<f:facet name="header">Lastname</f:facet>
 			      #{student.lastname}
 			   </h:column>
 			</h:dataTable>
 		</ui:repeat>
+		<br></br>
+		<h:form>
+			<p>
+				<h:commandLink action="transferStudent">
+					<h:outputText value="Transfer a student" />
+				</h:commandLink>
+			</p>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

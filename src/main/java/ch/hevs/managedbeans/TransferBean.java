@@ -1,8 +1,10 @@
 package ch.hevs.managedbeans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -22,8 +24,20 @@ public class TransferBean {
 	private IClassName iClassName;
 	private IStudent iStudent;
 
+	// list classes and list students
 	private List<ClassName> listClasses;
 	private List<Student> listStudents;
+
+	// list classes and students string
+	private List<String> listClassesString;
+	private List<String> listStudentsString;
+
+	// variables update for the student transfer
+	private Student updatedStudent;
+	private ClassName updatedClass;
+
+	// transactional result
+	private String transactionResult = "";
 
 	@PostConstruct
 	public void initialize() throws NamingException {
@@ -33,6 +47,10 @@ public class TransferBean {
 				"java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");
 		iStudent = (IStudent) ctx
 				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/StudentBean!ch.hevs.bankservice.IStudent");
+
+		// initialize strings list
+		listClassesString = new ArrayList<String>();
+		listStudentsString = new ArrayList<String>();
 	}
 
 	public void fillDatabase() {
@@ -42,12 +60,41 @@ public class TransferBean {
 		listClasses = iClassName.getAllClassName();
 		// get all students
 		listStudents = iStudent.getAllStudents();
+		fillListClassesString();
+		fillListStudentString();
 	}
 
 	public void clearDatabase() {
 		iClassName.clearDatabase();
 	}
 
+	private void fillListStudentString() {
+		for (int i = 0; i < listStudents.size(); i++) {
+			listStudentsString.add(listStudents.get(i).getFirstname() + " " + listStudents.get(i).getLastname());
+		}
+	}
+
+	private void fillListClassesString() {
+		for (int i = 0; i < listClasses.size(); i++) {
+			listClassesString.add(listClasses.get(i).getName());
+		}
+	}
+
+	public void transferStudent() {
+		try {
+			if (updatedStudent.getClass().getName().equals(updatedClass.getName())) {
+				this.transactionResult = "The student is already in this class !";
+			} else {
+				// Transfer the student
+				iStudent.changeClass(updatedStudent.getId(), updatedClass.getId());
+				this.transactionResult = "Success!";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// getters and setters
 	public IClassName getiClassName() {
 		return iClassName;
 	}
@@ -70,6 +117,59 @@ public class TransferBean {
 
 	public void setListStudents(List<Student> listStudents) {
 		this.listStudents = listStudents;
+	}
+
+	public IStudent getiStudent() {
+		return iStudent;
+	}
+
+	public void setiStudent(IStudent iStudent) {
+		this.iStudent = iStudent;
+	}
+
+	public List<String> getListClassesString() {
+		return listClassesString;
+	}
+
+	public void setListClassesString(List<String> listClassesString) {
+		this.listClassesString = listClassesString;
+	}
+
+	public List<String> getListStudentsString() {
+		return listStudentsString;
+	}
+
+	public void setListStudentsString(List<String> listStudentsString) {
+		this.listStudentsString = listStudentsString;
+	}
+
+	public Student getUpdatedStudent() {
+		return updatedStudent;
+	}
+
+	public void setUpdatedStudent(Student updatedStudent) {
+		this.updatedStudent = updatedStudent;
+	}
+
+	public ClassName getUpdatedClass() {
+		return updatedClass;
+	}
+
+	public void setUpdatedClass(ClassName updatedClass) {
+		this.updatedClass = updatedClass;
+	}
+
+	public void updateStudent(ValueChangeEvent event) {
+		System.out.println("new student : " + (String) event.getNewValue());
+		String[] studentName = ((String) event.getNewValue()).split(" ");
+		updatedStudent = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
+		System.out.println("student from db " + updatedStudent.getLastname());
+	}
+
+	public void updateClass(ValueChangeEvent event) {
+		System.out.println("new class : " + (String) event.getNewValue());
+		updatedClass = iClassName.getClassByName((String) event.getNewValue());
+		System.out.println("class from db " + updatedClass.getId());
 	}
 
 	/*

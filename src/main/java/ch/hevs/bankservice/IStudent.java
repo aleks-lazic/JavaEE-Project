@@ -12,5 +12,9 @@ public interface IStudent {
 	List<Student> getAllStudents();
 
 	Student getStudentById(Long id);
+	
+	Student getStudentByFirstnameAndLastname(String firstname, String lastname);
+	
+	void changeClass(Long idStudent, Long idClass);
 
 }

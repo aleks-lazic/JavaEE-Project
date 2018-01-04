@@ -11,6 +11,8 @@ public interface IClassName {
 
 	ClassName getClassName(Long id);
 	
+	ClassName getClassByName(String name);
+	
 	List<ClassName> getAllClassName();
 	
 	void fillDatabase();

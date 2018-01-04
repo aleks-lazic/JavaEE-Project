@@ -16,9 +16,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name="Student")
+@Table(name = "Student")
 public class Student {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
@@ -27,64 +27,57 @@ public class Student {
 	@ManyToOne
 	private ClassName className;
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToMany(mappedBy="student", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
 	private List<Mark> marks;
-	
 
-	
-	public Student(){
-		
+	public Student() {
+
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getFirstname() {
 		return firstname;
 	}
 
-
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-
 
 	public String getLastname() {
 		return lastname;
 	}
 
-
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-
 
 	public ClassName getClassName() {
 		return className;
 	}
 
-
 	public void setClassName(ClassName className) {
 		this.className = className;
 	}
-
 
 	public List<Mark> getMarks() {
 		return marks;
 	}
 
-
 	public void setMarks(List<Mark> marks) {
 		this.marks = marks;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", className=" + className.getName();
+		return "Student [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", className="
+				+ className.getName();
 	}
-	
-	
-	
-	
-	
-	
+
 }
