@@ -56,6 +56,14 @@ public class TransferBean {
 	public void fillDatabase() {
 		// fill the database
 		iClassName.fillDatabase();
+		updateFields();
+	}
+
+	public void clearDatabase() {
+		iClassName.clearDatabase();
+	}
+
+	private void updateFields() {
 		// get all classes for the school
 		listClasses = iClassName.getAllClassName();
 		// get all students
@@ -64,33 +72,33 @@ public class TransferBean {
 		fillListStudentString();
 	}
 
-	public void clearDatabase() {
-		iClassName.clearDatabase();
-	}
-
 	private void fillListStudentString() {
+		listStudentsString.removeAll(listStudentsString);
 		for (int i = 0; i < listStudents.size(); i++) {
 			listStudentsString.add(listStudents.get(i).getFirstname() + " " + listStudents.get(i).getLastname());
 		}
 	}
 
 	private void fillListClassesString() {
+		listClassesString.removeAll(listClassesString);
 		for (int i = 0; i < listClasses.size(); i++) {
 			listClassesString.add(listClasses.get(i).getName());
 		}
 	}
 
-	public void transferStudent() {
+	public String transferStudent() {
 		try {
 			if (updatedStudent.getClass().getName().equals(updatedClass.getName())) {
-				this.transactionResult = "The student is already in this class !";
+				return "error";
 			} else {
 				// Transfer the student
 				iStudent.changeClass(updatedStudent.getId(), updatedClass.getId());
-				this.transactionResult = "Success!";
+				updateFields();
+				return "classList";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "exception";
 		}
 	}
 

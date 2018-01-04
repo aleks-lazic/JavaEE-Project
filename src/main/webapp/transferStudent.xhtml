@@ -13,11 +13,11 @@
         	<br></br>
         	<h:panelGrid columns="5">
         		<h:outputText value="student: "></h:outputText>
-	        	<h:selectOneMenu valueChangeListener="#{transferBean.updateStudent}" onchange="submit()">
+	        	<h:selectOneMenu valueChangeListener="#{transferBean.updateStudent}">
 	        		<f:selectItems value="#{transferBean.listStudentsString}"/>
 	        	</h:selectOneMenu>
 	        	<h:outputText value="class: "></h:outputText>
-	        	<h:selectOneMenu valueChangeListener="#{transferBean.updateClass}" onchange="submit()">
+	        	<h:selectOneMenu valueChangeListener="#{transferBean.updateClass}">
 	        		<f:selectItems value="#{transferBean.listClassesString}"/>
 	        	</h:selectOneMenu>
         	</h:panelGrid>
