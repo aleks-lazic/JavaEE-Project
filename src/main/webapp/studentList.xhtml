@@ -20,6 +20,14 @@
 			   </h:column>
 			</h:dataTable>
 		</ui:repeat>
+		<br></br>
+		<h:form>
+			<p>
+				<h:commandLink action="#{transferBean.navigateToHomePage}">
+					<h:outputText value="Back to home page" />
+				</h:commandLink>
+			</p>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

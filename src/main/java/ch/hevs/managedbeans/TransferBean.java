@@ -42,6 +42,8 @@ public class TransferBean {
 	private List<String> listStudentsString;
 
 	// variables update for the student transfer
+	private String updatedStudentString;
+	private String updatedClassString;
 	private Student updatedStudent;
 	private ClassName updatedClass;
 
@@ -49,7 +51,7 @@ public class TransferBean {
 	private String transactionResult = "";
 
 	/**
-	 * initialize the services
+	 * initialize the services with the JNDI
 	 * 
 	 * @throws NamingException
 	 */
@@ -116,13 +118,13 @@ public class TransferBean {
 	 */
 	public String transferStudent() {
 		try {
-			if (updatedStudent.getClass().getName().equals(updatedClass.getName())) {
-				transactionResult = "error";
-			} else {
-				// Transfer the student
-				iStudent.changeClass(updatedStudent.getId(), updatedClass.getId());
-				transactionResult = "classList";
-			}
+			// get the student object and class object from DB
+			String[] studentName = updatedStudentString.split(" ");
+			updatedStudent = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
+			updatedClass = iClassName.getClassByName(updatedClassString);
+			// Transfer the student
+			iStudent.changeClass(updatedStudent.getId(), updatedClass.getId());
+			transactionResult = navigateToListClasses();
 		} catch (Exception e) {
 			e.printStackTrace();
 			transactionResult = "exception";
@@ -138,8 +140,7 @@ public class TransferBean {
 	 */
 	public String createSubject(String subjectName) {
 		iSubject.insertSubject(subjectName);
-		getListSubjectsFromDB();
-		return "subjectList";
+		return navigateToListSubjects();
 	}
 
 	/**
@@ -149,10 +150,7 @@ public class TransferBean {
 	 * @param event
 	 */
 	public void updateStudent(ValueChangeEvent event) {
-		System.out.println("new student : " + (String) event.getNewValue());
-		String[] studentName = ((String) event.getNewValue()).split(" ");
-		updatedStudent = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
-		System.out.println("student from db " + updatedStudent.getLastname());
+		updatedStudentString = (String) event.getNewValue();
 	}
 
 	/**
@@ -162,9 +160,7 @@ public class TransferBean {
 	 * @param event
 	 */
 	public void updateClass(ValueChangeEvent event) {
-		System.out.println("new class : " + (String) event.getNewValue());
-		updatedClass = iClassName.getClassByName((String) event.getNewValue());
-		System.out.println("class from db " + updatedClass.getId());
+		updatedClassString = (String) event.getNewValue();
 	}
 
 	/**
@@ -185,29 +181,28 @@ public class TransferBean {
 		}
 	}
 
-	/**
-	 * get the list subjects from the db and creates the number of grades and
-	 * the average grade
-	 */
-	private void getListSubjectsFromDB() {
-		// get all subjects
-		listSubjects = iSubject.getAllSubjects();
-		// get average and nb grade per subject
-		nbGradesPerSubject = new int[listSubjects.size()];
-		averageGradePerSubject = new double[listSubjects.size()];
-
-		// calculate average and nb grade
-		calculateAverageAndNbGrades();
-	}
-
 	// navigation to pages
+	
+	/**
+	 * navigation to the home page
+	 * @return
+	 */
+	public String navigateToHomePage(){
+		return "welcomeBank";
+	}
 	/**
 	 * navigate to the list of subjects
 	 * 
 	 * @return
 	 */
 	public String navigateToListSubjects() {
-		getListSubjectsFromDB();
+		// get all subjects
+		listSubjects = iSubject.getAllSubjects();
+		// get average and nb grade per subject
+		nbGradesPerSubject = new int[listSubjects.size()];
+		averageGradePerSubject = new double[listSubjects.size()];
+		// calculate average and nb grade
+		calculateAverageAndNbGrades();
 		return "subjectList";
 	}
 
