@@ -1,5 +1,6 @@
 package ch.hevs.managedbeans;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +11,10 @@ import javax.naming.NamingException;
 
 import ch.hevs.bankservice.IClassName;
 import ch.hevs.bankservice.IStudent;
+import ch.hevs.bankservice.ISubject;
 import ch.hevs.businessobject.ClassName;
 import ch.hevs.businessobject.Student;
+import ch.hevs.businessobject.Subject;
 
 /**
  * TransferBean.java
@@ -23,10 +26,19 @@ public class TransferBean {
 	// service interfaces
 	private IClassName iClassName;
 	private IStudent iStudent;
+	private ISubject iSubject;
 
-	// list classes and list students
+	// list of entities
 	private List<ClassName> listClasses;
 	private List<Student> listStudents;
+	private List<Subject> listSubjects;
+
+	// subjects properties
+	private int[] nbGradesPerSubject;
+	private double[] averageGradePerSubject;
+
+	// subject creation
+	private String subjectName = "";
 
 	// list classes and students string
 	private List<String> listClassesString;
@@ -47,6 +59,8 @@ public class TransferBean {
 				"java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");
 		iStudent = (IStudent) ctx
 				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/StudentBean!ch.hevs.bankservice.IStudent");
+		iSubject = (ISubject) ctx
+				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/SubjectBean!ch.hevs.bankservice.ISubject");
 
 		// initialize strings list
 		listClassesString = new ArrayList<String>();
@@ -56,23 +70,16 @@ public class TransferBean {
 	public void fillDatabase() {
 		// fill the database
 		iClassName.fillDatabase();
-		updateFields();
 	}
 
 	public void clearDatabase() {
 		iClassName.clearDatabase();
 	}
 
-	private void updateFields() {
-		// get all classes for the school
-		listClasses = iClassName.getAllClassName();
-		// get all students
-		listStudents = iStudent.getAllStudents();
-		fillListClassesString();
-		fillListStudentString();
-	}
-
 	private void fillListStudentString() {
+		if (listStudents == null) {
+			listStudents = iStudent.getAllStudents();
+		}
 		listStudentsString.removeAll(listStudentsString);
 		for (int i = 0; i < listStudents.size(); i++) {
 			listStudentsString.add(listStudents.get(i).getFirstname() + " " + listStudents.get(i).getLastname());
@@ -89,17 +96,88 @@ public class TransferBean {
 	public String transferStudent() {
 		try {
 			if (updatedStudent.getClass().getName().equals(updatedClass.getName())) {
-				return "error";
+				transactionResult = "error";
 			} else {
 				// Transfer the student
 				iStudent.changeClass(updatedStudent.getId(), updatedClass.getId());
-				updateFields();
-				return "classList";
+				transactionResult = "classList";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "exception";
+			transactionResult = "exception";
 		}
+		return transactionResult;
+	}
+
+	public String createSubject(String subjectName) {
+		iSubject.insertSubject(subjectName);
+		getListSubjectsFromDB();
+		return "subjectList";
+	}
+
+	public void updateStudent(ValueChangeEvent event) {
+		System.out.println("new student : " + (String) event.getNewValue());
+		String[] studentName = ((String) event.getNewValue()).split(" ");
+		updatedStudent = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
+		System.out.println("student from db " + updatedStudent.getLastname());
+	}
+
+	public void updateClass(ValueChangeEvent event) {
+		System.out.println("new class : " + (String) event.getNewValue());
+		updatedClass = iClassName.getClassByName((String) event.getNewValue());
+		System.out.println("class from db " + updatedClass.getId());
+	}
+
+	private void calculateAverageAndNbGrades() {
+		double average = 0.0;
+		double sum = 0.0;
+		for (int i = 0; i < listSubjects.size(); i++) {
+			for (int j = 0; j < listSubjects.get(i).getMarks().size(); j++) {
+				nbGradesPerSubject[i]++;
+				sum += listSubjects.get(i).getMarks().get(j).getValue();
+			}
+			average = sum / listSubjects.get(i).getMarks().size();
+			averageGradePerSubject[i] = average;
+			average = 0.0;
+			sum = 0.0;
+		}
+	}
+
+	private void getListSubjectsFromDB() {
+		// get all subjects
+		listSubjects = iSubject.getAllSubjects();
+		// get average and nb grade per subject
+		nbGradesPerSubject = new int[listSubjects.size()];
+		averageGradePerSubject = new double[listSubjects.size()];
+
+		// calculate average and nb grade
+		calculateAverageAndNbGrades();
+	}
+
+	// navigation to pages
+	public String navigateToListSubjects() {
+		getListSubjectsFromDB();
+		return "subjectList";
+	}
+
+	public String navigateToListClasses() {
+		listClasses = iClassName.getAllClassName();
+		return "classList";
+	}
+
+	public String navigateToListStudents() {
+		listStudents = iStudent.getAllStudents();
+		return "studentList";
+	}
+
+	public String navigateToTransferStudent() {
+		fillListClassesString();
+		fillListStudentString();
+		return "transferStudent";
+	}
+
+	public String navigateToCreateSubject() {
+		return "createSubject";
 	}
 
 	// getters and setters
@@ -167,17 +245,44 @@ public class TransferBean {
 		this.updatedClass = updatedClass;
 	}
 
-	public void updateStudent(ValueChangeEvent event) {
-		System.out.println("new student : " + (String) event.getNewValue());
-		String[] studentName = ((String) event.getNewValue()).split(" ");
-		updatedStudent = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
-		System.out.println("student from db " + updatedStudent.getLastname());
+	public ISubject getiSubject() {
+		return iSubject;
 	}
 
-	public void updateClass(ValueChangeEvent event) {
-		System.out.println("new class : " + (String) event.getNewValue());
-		updatedClass = iClassName.getClassByName((String) event.getNewValue());
-		System.out.println("class from db " + updatedClass.getId());
+	public void setiSubject(ISubject iSubject) {
+		this.iSubject = iSubject;
+	}
+
+	public List<Subject> getListSubjects() {
+		return listSubjects;
+	}
+
+	public void setListSubjects(List<Subject> listSubjects) {
+		this.listSubjects = listSubjects;
+	}
+
+	public String getTransactionResult() {
+		return transactionResult;
+	}
+
+	public void setTransactionResult(String transactionResult) {
+		this.transactionResult = transactionResult;
+	}
+
+	public int[] getNbGradesPerSubject() {
+		return nbGradesPerSubject;
+	}
+
+	public void setNbGradesPerSubject(int[] nbGradesPerSubject) {
+		this.nbGradesPerSubject = nbGradesPerSubject;
+	}
+
+	public double[] getAverageGradePerSubject() {
+		return averageGradePerSubject;
+	}
+
+	public void setAverageGradePerSubject(double[] averageGradePerSubject) {
+		this.averageGradePerSubject = averageGradePerSubject;
 	}
 
 	/*

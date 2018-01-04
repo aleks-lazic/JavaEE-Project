@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h:outputLabel value="Subject List"></h:outputLabel>
+		<br></br>
+		<ui:repeat var="item" value="#{transferBean.listSubjects}"
+			varStatus="myVarStatus">
+			<p>#{item.name}</p>
+			<h:dataTable value="#{myVarStatus.index}" var="data">
+				<h:column>
+					<f:facet name="header">nbGrades</f:facet>
+			      #{transferBean.nbGradesPerSubject[data]} 
+			   </h:column>
+				<h:column>
+					<f:facet name="header">Average garde</f:facet>
+			      #{transferBean.averageGradePerSubject[data]} 
+			   </h:column>
+			</h:dataTable>
+		</ui:repeat>
+		<h:form>
+			<p>
+				<h:commandLink action="#{transferBean.navigateToCreateSubject}">
+					<h:outputText value="Create new subject" />
+				</h:commandLink>
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

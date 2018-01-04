@@ -17,13 +17,18 @@
 			<h:commandButton value="Clear DB"
 				action="#{transferBean.clearDatabase}"></h:commandButton>
 			<p>
-				<h:commandLink action="classList">
+				<h:commandLink action="#{transferBean.navigateToListClasses}">
 					<h:outputText value="Show class list" />
 				</h:commandLink>
 			</p>
 			<p>
-				<h:commandLink action="studentList">
+				<h:commandLink action="#{transferBean.navigateToListStudents}">
 					<h:outputText value="Show student list" />
+				</h:commandLink>
+			</p>
+			<p>
+				<h:commandLink action="#{transferBean.navigateToListSubjects}">
+					<h:outputText value="Show subject list" />
 				</h:commandLink>
 			</p>
 		</h:form>

@@ -74,10 +74,26 @@ public class ClassNameBean implements IClassName {
 		student5.setLastname("Peixoto");
 		student5.setClassName(className3);
 
-		Mark mark = new Mark();
-		mark.setValue(5.1);
-		mark.setStudent(student1);
-		mark.setSubject(subject1);
+		Mark mark1 = new Mark();
+		Mark mark2 = new Mark();
+		Mark mark3 = new Mark();
+		Mark mark4 = new Mark();
+		Mark mark5 = new Mark();
+		mark1.setValue(5.1);
+		mark1.setStudent(student1);
+		mark1.setSubject(subject1);
+		mark2.setValue(4.7);
+		mark2.setStudent(student2);
+		mark2.setSubject(subject2);
+		mark3.setValue(5.3);
+		mark3.setStudent(student3);
+		mark3.setSubject(subject3);
+		mark4.setValue(5.5);
+		mark4.setStudent(student4);
+		mark4.setSubject(subject1);
+		mark5.setValue(4.8);
+		mark5.setStudent(student5);
+		mark5.setSubject(subject2);
 
 		em.persist(className1);
 		em.persist(className2);
@@ -93,7 +109,11 @@ public class ClassNameBean implements IClassName {
 		em.persist(student4);
 		em.persist(student5);
 
-		em.persist(mark);
+		em.persist(mark1);
+		em.persist(mark2);
+		em.persist(mark3);
+		em.persist(mark4);
+		em.persist(mark5);
 	}
 
 	@Override
