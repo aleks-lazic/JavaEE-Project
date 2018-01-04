@@ -37,9 +37,6 @@ public class TransferBean {
 	private int[] nbGradesPerSubject;
 	private double[] averageGradePerSubject;
 
-	// subject creation
-	private String subjectName = "";
-
 	// list classes and students string
 	private List<String> listClassesString;
 	private List<String> listStudentsString;
@@ -51,6 +48,11 @@ public class TransferBean {
 	// transactional result
 	private String transactionResult = "";
 
+	/**
+	 * initialize the services
+	 * 
+	 * @throws NamingException
+	 */
 	@PostConstruct
 	public void initialize() throws NamingException {
 		// use JNDI to inject reference to bank EJB
@@ -67,15 +69,25 @@ public class TransferBean {
 		listStudentsString = new ArrayList<String>();
 	}
 
+	/**
+	 * method to fill the database with some content
+	 */
 	public void fillDatabase() {
 		// fill the database
 		iClassName.fillDatabase();
 	}
 
+	/**
+	 * method to clear all data from the db
+	 */
 	public void clearDatabase() {
 		iClassName.clearDatabase();
 	}
 
+	/**
+	 * create a list of string with the students name to populate the dropdown
+	 * list with the names
+	 */
 	private void fillListStudentString() {
 		if (listStudents == null) {
 			listStudents = iStudent.getAllStudents();
@@ -86,6 +98,10 @@ public class TransferBean {
 		}
 	}
 
+	/**
+	 * create a list of string with the classes name to populate the dropdown
+	 * list with the classes
+	 */
 	private void fillListClassesString() {
 		listClassesString.removeAll(listClassesString);
 		for (int i = 0; i < listClasses.size(); i++) {
@@ -93,6 +109,11 @@ public class TransferBean {
 		}
 	}
 
+	/**
+	 * transfer a student from one class to another
+	 * 
+	 * @return
+	 */
 	public String transferStudent() {
 		try {
 			if (updatedStudent.getClass().getName().equals(updatedClass.getName())) {
@@ -109,12 +130,24 @@ public class TransferBean {
 		return transactionResult;
 	}
 
+	/**
+	 * create a subject with the subject name from the input form
+	 * 
+	 * @param subjectName
+	 * @return
+	 */
 	public String createSubject(String subjectName) {
 		iSubject.insertSubject(subjectName);
 		getListSubjectsFromDB();
 		return "subjectList";
 	}
 
+	/**
+	 * updates the student on the change listener from the dropdown list in
+	 * transferStudent
+	 * 
+	 * @param event
+	 */
 	public void updateStudent(ValueChangeEvent event) {
 		System.out.println("new student : " + (String) event.getNewValue());
 		String[] studentName = ((String) event.getNewValue()).split(" ");
@@ -122,12 +155,21 @@ public class TransferBean {
 		System.out.println("student from db " + updatedStudent.getLastname());
 	}
 
+	/**
+	 * updates the class on the change listener from the dropdown list in
+	 * transferStudent
+	 * 
+	 * @param event
+	 */
 	public void updateClass(ValueChangeEvent event) {
 		System.out.println("new class : " + (String) event.getNewValue());
 		updatedClass = iClassName.getClassByName((String) event.getNewValue());
 		System.out.println("class from db " + updatedClass.getId());
 	}
 
+	/**
+	 * calculate the average and the number of grades for each subject
+	 */
 	private void calculateAverageAndNbGrades() {
 		double average = 0.0;
 		double sum = 0.0;
@@ -143,6 +185,10 @@ public class TransferBean {
 		}
 	}
 
+	/**
+	 * get the list subjects from the db and creates the number of grades and
+	 * the average grade
+	 */
 	private void getListSubjectsFromDB() {
 		// get all subjects
 		listSubjects = iSubject.getAllSubjects();
@@ -155,27 +201,53 @@ public class TransferBean {
 	}
 
 	// navigation to pages
+	/**
+	 * navigate to the list of subjects
+	 * 
+	 * @return
+	 */
 	public String navigateToListSubjects() {
 		getListSubjectsFromDB();
 		return "subjectList";
 	}
 
+	/**
+	 * navigate to the list of classes
+	 * 
+	 * @return
+	 */
 	public String navigateToListClasses() {
 		listClasses = iClassName.getAllClassName();
 		return "classList";
 	}
 
+	/**
+	 * navigate to the list of students
+	 * 
+	 * @return
+	 */
 	public String navigateToListStudents() {
 		listStudents = iStudent.getAllStudents();
 		return "studentList";
 	}
 
+	/**
+	 * navigate to the page transfer student and populate the list of classes
+	 * and students for the dropdown
+	 * 
+	 * @return
+	 */
 	public String navigateToTransferStudent() {
 		fillListClassesString();
 		fillListStudentString();
 		return "transferStudent";
 	}
 
+	/**
+	 * navigate to the page to create a subject
+	 * 
+	 * @return
+	 */
 	public String navigateToCreateSubject() {
 		return "createSubject";
 	}
