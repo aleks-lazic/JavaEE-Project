@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14141592409490" configfile="/TP12-WEB-EJB-PC-EPC-E-donnee/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="welcomeBank.xhtml" x="122" y="178" id="pf15149926336560" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15149926336571" path="/welcomeBank.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="classList.xhtml" x="338" y="178" id="pf15149926336572" referenceLink="//@navigationRule.1/@fromViewId|" inlinks="pf15149926336571" path="/transferForm.xhtml"/>
-  <links id="pf15149926336571" target="pf15149926336572" source="pf15149926336560" outcome="transferForm"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14141592409490" configfile="/JavaEE-Project/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="welcomeBank.xhtml" x="24" y="300" id="pf15149926336560" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15151621805761 pf15151621805760 pf151516292543414" path="/welcomeBank.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="studentList.xhtml" x="384" y="576" id="pf15151621805773" outlinks="pf15151621805774 pf15151621805775" inlinks="pf15151621805760" path="/studentList.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="subjectList.xhtml" x="386" y="300" id="pf15151621805776" outlinks="pf15151621805777 pf15151621805778" inlinks="pf15151621805761" path="/subjectList.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="transferStudent.xhtml" x="693" y="156" id="pf15151621805779" inlinks="pf151516296231716" path="/transferStudent.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="createSubject.xhtml" x="701" y="384" id="pf151516218057710" inlinks="pf15151621805778" path="/createSubject.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="subjectUpdate.xhtml" x="698" y="300" id="pf151516218057711" inlinks="pf15151621805777" path="/subjectUpdate.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="addMarkToStudent.xhtml" x="684" y="576" id="pf151516218057712" inlinks="pf15151621805775" path="/addMarkToStudent.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="createStudent.xhtml" x="699" y="492" id="pf151516218057713" inlinks="pf15151621805774" path="/createStudent.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="classList.xhtml" x="394" y="156" id="pf151516292543415" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf151516296231716" inlinks="pf151516292543414" path="/classList.xhtml"/>
+  <links id="pf15151621805761" target="pf15151621805776" source="pf15149926336560" outcome="subjectList"/>
+  <links id="pf15151621805777" target="pf151516218057711" source="pf15151621805776" outcome="subjectUpdate"/>
+  <links id="pf15151621805778" target="pf151516218057710" source="pf15151621805776" outcome="createSubject"/>
+  <links id="pf15151621805774" target="pf151516218057713" source="pf15151621805773" outcome="createStudent"/>
+  <links id="pf15151621805775" target="pf151516218057712" source="pf15151621805773" outcome="addMarkToStudent"/>
+  <links id="pf15151621805760" target="pf15151621805773" source="pf15149926336560" outcome="studentList"/>
+  <links id="pf151516292543414" target="pf151516292543415" source="pf15149926336560" outcome="classList"/>
+  <links id="pf151516296231716" target="pf15151621805779" source="pf151516292543415" outcome="transferStudent"/>
 </pageflow:Pageflow>

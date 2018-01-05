@@ -5,7 +5,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import org.junit.Test;
 
 import ch.hevs.businessobject.ClassName;
 import ch.hevs.businessobject.Mark;
@@ -14,7 +13,6 @@ import ch.hevs.businessobject.Subject;
 
 public class PersistenceTest {
 
-	@Test
 	public void test() {
 		
 

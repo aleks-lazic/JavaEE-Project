@@ -2,7 +2,12 @@ package ch.hevs.bankservice;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJBAccessException;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -12,12 +17,17 @@ import ch.hevs.businessobject.Mark;
 import ch.hevs.businessobject.Student;
 import ch.hevs.businessobject.Subject;
 
+
 @Stateless
+@RolesAllowed(value = {"administrator", "student"})
 public class ClassNameBean implements IClassName {
 
 	@PersistenceContext(name = "schoolPU")
 	private EntityManager em;
 
+	@Resource
+	private SessionContext session; 
+	
 	@Override
 	public ClassName getClassName(Long id) {
 		// ClassName cn = (ClassName)em.createQuery("FROM " +
@@ -131,5 +141,16 @@ public class ClassNameBean implements IClassName {
 		Query query = em.createQuery("FROM " + ClassName.class.getName() + " s WHERE s.name = :name");
 		query.setParameter("name", name);
 		return (ClassName) query.getSingleResult();
+	}
+
+	@Override
+	public boolean deleteById(ClassName className){
+		if(session.isCallerInRole("administrator")){
+			em.remove(em.contains(className) ? className : em.merge(className));
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 }

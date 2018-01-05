@@ -9,6 +9,10 @@
 		<br></br>
 		<ui:repeat var="item" value="#{transferBean.listClasses}">
 			<p>#{item.name}</p>
+			<h:form>
+				<h:commandButton value="Delete class"
+					action="#{transferBean.deleteClass(item.id)}"/>
+			</h:form>
 			<h:dataTable value="#{item.students}" var="student">
 				<h:column>
 					<f:facet name="header">Firstname</f:facet>

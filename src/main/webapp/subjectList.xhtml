@@ -10,6 +10,10 @@
 		<ui:repeat var="item" value="#{transferBean.listSubjects}"
 			varStatus="myVarStatus">
 			<p>#{item.name}</p>
+			<h:form>
+				<h:commandButton value="Update subject"
+					action="#{transferBean.navigateToUpdateSubject(item.id, item.name)}"/>
+			</h:form>
 			<h:dataTable value="#{myVarStatus.index}" var="data">
 				<h:column>
 					<f:facet name="header">nbGrades</f:facet>

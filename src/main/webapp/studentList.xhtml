@@ -23,6 +23,16 @@
 		<br></br>
 		<h:form>
 			<p>
+				<h:commandLink action="#{transferBean.navigateToAddMarkToStudent}">
+					<h:outputText value="Create a new mark to a student" />
+				</h:commandLink>
+			</p>
+			<p>
+				<h:commandLink action="#{transferBean.navigateToCreateStudent}">
+					<h:outputText value="Create new student" />
+				</h:commandLink>
+			</p>
+			<p>
 				<h:commandLink action="#{transferBean.navigateToHomePage}">
 					<h:outputText value="Back to home page" />
 				</h:commandLink>

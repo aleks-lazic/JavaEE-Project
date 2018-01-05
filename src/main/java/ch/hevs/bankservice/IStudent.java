@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import ch.hevs.businessobject.ClassName;
 import ch.hevs.businessobject.Student;
+import ch.hevs.businessobject.Subject;
 
 @Local
 public interface IStudent {
@@ -15,6 +17,10 @@ public interface IStudent {
 	
 	Student getStudentByFirstnameAndLastname(String firstname, String lastname);
 	
-	void changeClass(Long idStudent, Long idClass);
+	boolean changeClass(Long idStudent, Long idClass);
+	
+	boolean insertStudent(String studentFirstname, String studentLastName, ClassName className);
+	
+	boolean createMark(Subject subject, Student student, double value);
 
 }

@@ -13,8 +13,64 @@
 		<display-name>welcomeBank.xhtml</display-name>
 		<from-view-id>/welcomeBank.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>transferForm</from-outcome>
-			<to-view-id>/transferForm.xhtml</to-view-id>
+			<from-outcome>subjectList</from-outcome>
+			<to-view-id>/subjectList.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcomeBank.xhtml</display-name>
+		<from-view-id>/welcomeBank.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>classList</from-outcome>
+			<to-view-id>/classList.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>subjectList.xhtml</display-name>
+		<from-view-id>/subjectList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>subjectUpdate</from-outcome>
+			<to-view-id>/subjectUpdate.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>subjectList.xhtml</display-name>
+		<from-view-id>/subjectList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>createSubject</from-outcome>
+			<to-view-id>/createSubject.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>studentList.xhtml</display-name>
+		<from-view-id>/studentList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>createStudent</from-outcome>
+			<to-view-id>/createStudent.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>studentList.xhtml</display-name>
+		<from-view-id>/studentList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addMarkToStudent</from-outcome>
+			<to-view-id>/addMarkToStudent.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcomeBank.xhtml</display-name>
+		<from-view-id>/welcomeBank.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>studentList</from-outcome>
+			<to-view-id>/studentList.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>classList.xhtml</display-name>
+		<from-view-id>/classList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>transferStudent</from-outcome>
+			<to-view-id>/transferStudent.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

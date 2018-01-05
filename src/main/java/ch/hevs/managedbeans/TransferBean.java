@@ -40,12 +40,19 @@ public class TransferBean {
 	// list classes and students string
 	private List<String> listClassesString;
 	private List<String> listStudentsString;
+	private List<String> listSubjectString;
 
 	// variables update for the student transfer
 	private String updatedStudentString;
 	private String updatedClassString;
+	private String updatedSubjectString;
 	private Student updatedStudent;
 	private ClassName updatedClass;
+	private Subject udpatedSubject;
+	
+	// variables for the edition of a subject
+	private String idSubjectToUpdate;
+	private String nameSubjectToUpdate;
 
 	// transactional result
 	private String transactionResult = "";
@@ -59,8 +66,8 @@ public class TransferBean {
 	public void initialize() throws NamingException {
 		// use JNDI to inject reference to bank EJB
 		InitialContext ctx = new InitialContext();
-		iClassName = (IClassName) ctx.lookup(
-				"java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");
+		iClassName = (IClassName) ctx
+				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");
 		iStudent = (IStudent) ctx
 				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/StudentBean!ch.hevs.bankservice.IStudent");
 		iSubject = (ISubject) ctx
@@ -69,6 +76,7 @@ public class TransferBean {
 		// initialize strings list
 		listClassesString = new ArrayList<String>();
 		listStudentsString = new ArrayList<String>();
+		listSubjectString = new ArrayList<String>();
 	}
 
 	/**
@@ -76,6 +84,7 @@ public class TransferBean {
 	 */
 	public void fillDatabase() {
 		// fill the database
+		iClassName.clearDatabase();
 		iClassName.fillDatabase();
 	}
 
@@ -94,7 +103,7 @@ public class TransferBean {
 		if (listStudents == null) {
 			listStudents = iStudent.getAllStudents();
 		}
-		listStudentsString.removeAll(listStudentsString);
+		listStudentsString = new ArrayList<String>();
 		for (int i = 0; i < listStudents.size(); i++) {
 			listStudentsString.add(listStudents.get(i).getFirstname() + " " + listStudents.get(i).getLastname());
 		}
@@ -105,12 +114,29 @@ public class TransferBean {
 	 * list with the classes
 	 */
 	private void fillListClassesString() {
-		listClassesString.removeAll(listClassesString);
+		if(listClasses == null){
+			listClasses = iClassName.getAllClassName();
+		}
+		listClassesString = new ArrayList<String>();
 		for (int i = 0; i < listClasses.size(); i++) {
 			listClassesString.add(listClasses.get(i).getName());
 		}
 	}
 
+	/**
+	 * create a list of string with the students name to populate the dropdown
+	 * list with the names
+	 */
+	private void fillListSubjectString() {
+		if (listSubjects == null) {
+			listSubjects = iSubject.getAllSubjects();
+		}
+		listSubjectString.removeAll(listSubjectString);
+		for (int i = 0; i < listSubjects.size(); i++) {
+			listSubjectString.add(listSubjects.get(i).getName());
+		}
+	}
+	
 	/**
 	 * transfer a student from one class to another
 	 * 
@@ -123,7 +149,9 @@ public class TransferBean {
 			updatedStudent = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
 			updatedClass = iClassName.getClassByName(updatedClassString);
 			// Transfer the student
-			iStudent.changeClass(updatedStudent.getId(), updatedClass.getId());
+			if(!iStudent.changeClass(updatedStudent.getId(), updatedClass.getId())){
+				return navigateToErrorPage();
+			}
 			transactionResult = navigateToListClasses();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,7 +167,66 @@ public class TransferBean {
 	 * @return
 	 */
 	public String createSubject(String subjectName) {
-		iSubject.insertSubject(subjectName);
+		if(!iSubject.insertSubject(subjectName)){
+			return navigateToErrorPage();
+		}
+		return navigateToListSubjects();
+	}
+	
+	/**
+	 * create a student with the subject name from the input form
+	 * 
+	 * @param subjectName
+	 * @return
+	 */
+	public String createStudent(String studentFirstname, String studentLastName) {
+		ClassName className = new ClassName();
+		className = iClassName.getClassByName(updatedClassString);
+		if(!iStudent.insertStudent(studentFirstname, studentLastName, className)){
+			return navigateToErrorPage();
+		}
+		return navigateToListStudents();
+	}
+	
+	/**
+	 * create a mark with the subject name from the input form
+	 * 
+	 * @param subjectName
+	 * @return
+	 */
+	public String createNewMark(String mark){
+		Subject subject = new Subject();
+		Student student = new Student();
+		subject = iSubject.getSubjectByName(updatedSubjectString);
+		String[] studentName = updatedStudentString.split(" ");
+		student = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
+		
+		double value = Double.parseDouble(mark);
+		if(!iStudent.createMark(subject, student, value)){
+			return navigateToErrorPage();
+		}
+		
+		return navigateToListStudents();
+	}
+	
+	/**
+	 * Delete a class
+	 * 
+	 * @param classID
+	 * @return
+	 */
+	public String deleteClass(String classID){
+		ClassName className = iClassName.getClassName(Long.parseLong(classID));
+		if(!iClassName.deleteById(className)){
+			return navigateToErrorPage();
+		}
+		return navigateToListClasses();
+	}
+	
+	public String updateSubjectDB(String newSubjectName){
+		if(!iSubject.updateSubject(Long.parseLong(idSubjectToUpdate), newSubjectName)){
+			return navigateToErrorPage();
+		}
 		return navigateToListSubjects();
 	}
 
@@ -163,6 +250,16 @@ public class TransferBean {
 		updatedClassString = (String) event.getNewValue();
 	}
 
+	/**
+	 * updates the subject on the change listener from the dropdown list in
+	 * addmarktouser
+	 * 
+	 * @param event
+	 */
+	public void updateSubject(ValueChangeEvent event) {
+		updatedSubjectString = (String) event.getNewValue();
+	}
+	
 	/**
 	 * calculate the average and the number of grades for each subject
 	 */
@@ -245,6 +342,38 @@ public class TransferBean {
 	 */
 	public String navigateToCreateSubject() {
 		return "createSubject";
+	}
+	
+	/**
+	 * navigate to the page to create a student
+	 * 
+	 * @return
+	 */
+	public String navigateToCreateStudent(){
+		fillListClassesString();
+		return "createStudent";
+	}
+	
+	/**
+	 * navigate to the page to create a mark to a student
+	 * 
+	 * @return
+	 */
+	public String navigateToAddMarkToStudent(){
+		fillListSubjectString();
+		fillListStudentString();
+		return "addMarkToStudent";
+	}
+	
+	public String navigateToUpdateSubject(String id, String name){
+		System.out.println(id + " " + name);
+		idSubjectToUpdate = id;
+		nameSubjectToUpdate = name;
+		return "subjectUpdate";
+	}
+	
+	public String navigateToErrorPage(){
+		return "errorpage";
 	}
 
 	// getters and setters
@@ -351,6 +480,63 @@ public class TransferBean {
 	public void setAverageGradePerSubject(double[] averageGradePerSubject) {
 		this.averageGradePerSubject = averageGradePerSubject;
 	}
+
+	public List<String> getListSubjectString() {
+		return listSubjectString;
+	}
+
+	public void setListSubjectString(List<String> listSubjectString) {
+		this.listSubjectString = listSubjectString;
+	}
+
+	public String getUpdatedStudentString() {
+		return updatedStudentString;
+	}
+
+	public void setUpdatedStudentString(String updatedStudentString) {
+		this.updatedStudentString = updatedStudentString;
+	}
+
+	public String getUpdatedClassString() {
+		return updatedClassString;
+	}
+
+	public void setUpdatedClassString(String updatedClassString) {
+		this.updatedClassString = updatedClassString;
+	}
+
+	public String getUpdatedSubjectString() {
+		return updatedSubjectString;
+	}
+
+	public void setUpdatedSubjectString(String updatedSubjectString) {
+		this.updatedSubjectString = updatedSubjectString;
+	}
+
+	public Subject getUdpatedSubject() {
+		return udpatedSubject;
+	}
+
+	public void setUdpatedSubject(Subject udpatedSubject) {
+		this.udpatedSubject = udpatedSubject;
+	}
+
+	public String getIdSubjectToUpdate() {
+		return idSubjectToUpdate;
+	}
+
+	public void setIdSubjectToUpdate(String idSubjectToUpdate) {
+		this.idSubjectToUpdate = idSubjectToUpdate;
+	}
+
+	public String getNameSubjectToUpdate() {
+		return nameSubjectToUpdate;
+	}
+
+	public void setNameSubjectToUpdate(String nameSubjectToUpdate) {
+		this.nameSubjectToUpdate = nameSubjectToUpdate;
+	}
+	
 
 	/*
 	 * private List<Client> clients; private List<String> clientNames; private
