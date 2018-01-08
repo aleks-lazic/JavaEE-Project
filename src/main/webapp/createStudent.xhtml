@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h2>Create new student</h2>
+		<br></br>
+		<h:form>
+			<p>
+				<table>
+					<tr>
+						<th>Firstname</th>
+						<td><h:inputText binding="#{studentFirstname}" /></td>
+					</tr>
+					<tr>
+						<th>Lastname</th>
+						<td><h:inputText binding="#{studentLastname}"/></td>
+					</tr>
+					<tr>
+						<th>Class</th>
+						<td>	        	
+							<h:selectOneMenu valueChangeListener="#{transferBean.updateClass}">
+	        				<f:selectItems value="#{transferBean.listClassesString}"/>
+	        				</h:selectOneMenu>
+        				</td>
+					</tr>
+				</table>
+				<h:commandButton value="create" action="#{transferBean.createStudent(studentFirstname.value, studentLastname.value)}"/>
+			</p>
+			
+			<p>
+				<h:commandLink action="#{transferBean.navigateToListStudents}">
+					<h:outputText value="Back to student list" />
+				</h:commandLink>
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

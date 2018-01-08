@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+		<h2>Add mark to student</h2>
+		<br></br>
+		<h:form>
+			<p>
+				<table>
+					<tr>
+						<th>subject</th>
+						<td>
+							<h:selectOneMenu valueChangeListener="#{transferBean.updateSubject}">
+	        				<f:selectItems value="#{transferBean.listSubjectString}"/>
+	        				</h:selectOneMenu>
+						</td>
+					</tr>
+					<tr>
+						<th>Student</th>
+						<td>
+							<h:selectOneMenu valueChangeListener="#{transferBean.updateStudent}">
+	        				<f:selectItems value="#{transferBean.listStudentsString}"/>
+	        				</h:selectOneMenu>
+						</td>
+					</tr>
+					<tr>
+						<th>Mark</th>
+						<td><h:inputText binding="#{mark}"/></td>
+					</tr>
+				</table>
+				<h:commandButton value="create" action="#{transferBean.createNewMark(mark.value)}"/>
+				
+			</p>
+			
+			<p>
+				<h:commandLink action="#{transferBean.navigateToListStudents}">
+					<h:outputText value="Back to student list" />
+				</h:commandLink>
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
