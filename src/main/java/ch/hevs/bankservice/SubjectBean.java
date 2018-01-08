@@ -15,7 +15,6 @@ import ch.hevs.businessobject.Student;
 import ch.hevs.businessobject.Subject;
 
 @Stateless
-@RolesAllowed(value = {"administrator", "student"})
 public class SubjectBean implements ISubject {
 
 	@PersistenceContext(name = "schoolPU")

@@ -59,6 +59,14 @@ public class ClassName {
 		this.students = students;
 	}
 
+	public void removeStudent(Student student){
+		students.remove(student);
+	}
+	
+	public void addStudent(Student student){
+		students.add(student);
+	}
+	
 	@Override
 	public String toString() {
 		String s = "ClassName [id=" + id + ", name=" + name + ", students=\n" ;

@@ -3,6 +3,7 @@ package ch.hevs.bankservice;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.naming.NamingException;
 
 import ch.hevs.businessobject.ClassName;
 import ch.hevs.businessobject.Student;
@@ -17,7 +18,7 @@ public interface IStudent {
 	
 	Student getStudentByFirstnameAndLastname(String firstname, String lastname);
 	
-	boolean changeClass(Long idStudent, Long idClass);
+	boolean changeClass(String student, String className) throws NamingException;
 	
 	boolean insertStudent(String studentFirstname, String studentLastName, ClassName className);
 	
