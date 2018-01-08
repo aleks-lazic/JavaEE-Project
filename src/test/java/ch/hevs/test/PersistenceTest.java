@@ -13,8 +13,4 @@ import ch.hevs.businessobject.Subject;
 
 public class PersistenceTest {
 
-	public void test() {
-		
-
-	}
 }

@@ -12,12 +12,10 @@
 				<td>
 					<h3>#{item.name}</h3>
 				</td>
-				<td>
-					<h:form>
+				<td><h:form>
 						<h:commandButton value="Delete class"
-							action="#{transferBean.deleteClass(item.id)}"/>
-					</h:form>
-				</td>
+							action="#{transferBean.deleteClass(item.id)}" />
+					</h:form></td>
 			</table>
 			<h:dataTable value="#{item.students}" var="student">
 				<h:column>
@@ -29,10 +27,15 @@
 			      #{student.lastname}
 			   </h:column>
 			</h:dataTable>
-			<hr/>
+			<hr />
 		</ui:repeat>
 		<br></br>
 		<h:form>
+			<p>
+				<h:commandLink action="#{transferBean.navigateToCreateClass}">
+					<h:outputText value="Create new class" />
+				</h:commandLink>
+			</p>
 			<p>
 				<h:commandLink action="#{transferBean.navigateToTransferStudent}">
 					<h:outputText value="Transfer a student" />

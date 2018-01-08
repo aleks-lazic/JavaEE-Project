@@ -20,4 +20,6 @@ public interface IClassName {
 	void clearDatabase();
 	
 	boolean deleteById(ClassName className);
+	
+	boolean insertClass(String className);
 }

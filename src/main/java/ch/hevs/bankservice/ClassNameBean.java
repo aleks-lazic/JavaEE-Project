@@ -153,4 +153,16 @@ public class ClassNameBean implements IClassName {
 		}
 		
 	}
+
+	@Override
+	public boolean insertClass(String className) {
+		if(session.isCallerInRole("administrator")){
+			ClassName c = new ClassName();
+			c.setName(className);
+			em.persist(c);
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

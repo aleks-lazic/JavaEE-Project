@@ -42,14 +42,17 @@ public class TransferBean {
 	private List<String> listStudentsString;
 	private List<String> listSubjectString;
 
-	// variables update for the student transfer
+	// variables update
 	private String updatedStudentString;
 	private String updatedClassString;
 	private String updatedSubjectString;
 	private Student updatedStudent;
 	private ClassName updatedClass;
 	private Subject udpatedSubject;
-	
+
+	// String for the class creation
+	private String className;
+
 	// variables for the edition of a subject
 	private String idSubjectToUpdate;
 	private String nameSubjectToUpdate;
@@ -66,8 +69,8 @@ public class TransferBean {
 	public void initialize() throws NamingException {
 		// use JNDI to inject reference to bank EJB
 		InitialContext ctx = new InitialContext();
-		iClassName = (IClassName) ctx
-				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");
+		iClassName = (IClassName) ctx.lookup(
+				"java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/ClassNameBean!ch.hevs.bankservice.IClassName");
 		iStudent = (IStudent) ctx
 				.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/StudentBean!ch.hevs.bankservice.IStudent");
 		iSubject = (ISubject) ctx
@@ -114,7 +117,7 @@ public class TransferBean {
 	 * list with the classes
 	 */
 	private void fillListClassesString() {
-		if(listClasses == null){
+		if (listClasses == null) {
 			listClasses = iClassName.getAllClassName();
 		}
 		listClassesString = new ArrayList<String>();
@@ -136,7 +139,7 @@ public class TransferBean {
 			listSubjectString.add(listSubjects.get(i).getName());
 		}
 	}
-	
+
 	/**
 	 * transfer a student from one class to another
 	 * 
@@ -149,7 +152,7 @@ public class TransferBean {
 			updatedStudent = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
 			updatedClass = iClassName.getClassByName(updatedClassString);
 			// Transfer the student
-			if(!iStudent.changeClass(updatedStudent.getId(), updatedClass.getId())){
+			if (!iStudent.changeClass(updatedStudent.getId(), updatedClass.getId())) {
 				return navigateToErrorPage();
 			}
 			transactionResult = navigateToListClasses();
@@ -167,16 +170,16 @@ public class TransferBean {
 	 * @return
 	 */
 	public String createSubject(String subjectName) {
-		if(!subjectName.equals("")){
-			if(!iSubject.insertSubject(subjectName)){
+		if (!subjectName.equals("")) {
+			if (!iSubject.insertSubject(subjectName)) {
 				return navigateToErrorPage();
 			}
-		}else {
+		} else {
 			return navigateToFormatError();
 		}
 		return navigateToListSubjects();
 	}
-	
+
 	/**
 	 * create a student with the subject name from the input form
 	 * 
@@ -185,59 +188,71 @@ public class TransferBean {
 	 */
 	public String createStudent(String studentFirstname, String studentLastName) {
 		ClassName className = new ClassName();
-		
-		if (!studentFirstname.equals("") && !studentLastName.equals("")){
+
+		if (!studentFirstname.equals("") && !studentLastName.equals("")) {
 			className = iClassName.getClassByName(updatedClassString);
-			if(!iStudent.insertStudent(studentFirstname, studentLastName, className)){
+			if (!iStudent.insertStudent(studentFirstname, studentLastName, className)) {
 				return navigateToErrorPage();
 			}
-		}else {
+		} else {
 			return navigateToFormatError();
 		}
 		return navigateToListStudents();
 	}
-	
+
 	/**
 	 * create a mark with the subject name from the input form
 	 * 
 	 * @param subjectName
 	 * @return
 	 */
-	public String createNewMark(String mark){
+	public String createNewMark(String mark) {
 		Subject subject = new Subject();
 		Student student = new Student();
 		subject = iSubject.getSubjectByName(updatedSubjectString);
 		String[] studentName = updatedStudentString.split(" ");
 		student = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
-		
-		if(!mark.equals("")){
+
+		if (!mark.equals("")) {
 			double value = Double.parseDouble(mark);
-			if(!iStudent.createMark(subject, student, value)){
+			if (!iStudent.createMark(subject, student, value)) {
 				return navigateToErrorPage();
 			}
 		} else {
 			return navigateToFormatError();
 		}
-		
+
 		return navigateToListStudents();
 	}
-	
+
+	public String createClass(String className) {
+		if(!className.equals("")){
+			if (!iClassName.insertClass(className)) {
+				return navigateToErrorPage();
+			} else {
+				return navigateToListClasses();
+			}
+		} else {
+			return navigateToFormatError();
+		}
+	}
+
 	/**
 	 * Delete a class
 	 * 
 	 * @param classID
 	 * @return
 	 */
-	public String deleteClass(String classID){
+	public String deleteClass(String classID) {
 		ClassName className = iClassName.getClassName(Long.parseLong(classID));
-		if(!iClassName.deleteById(className)){
+		if (!iClassName.deleteById(className)) {
 			return navigateToErrorPage();
 		}
 		return navigateToListClasses();
 	}
-	
-	public String updateSubjectDB(String newSubjectName){
-		if(!iSubject.updateSubject(Long.parseLong(idSubjectToUpdate), newSubjectName)){
+
+	public String updateSubjectDB(String newSubjectName) {
+		if (!iSubject.updateSubject(Long.parseLong(idSubjectToUpdate), newSubjectName)) {
 			return navigateToErrorPage();
 		}
 		return navigateToListSubjects();
@@ -272,7 +287,7 @@ public class TransferBean {
 	public void updateSubject(ValueChangeEvent event) {
 		updatedSubjectString = (String) event.getNewValue();
 	}
-	
+
 	/**
 	 * calculate the average and the number of grades for each subject
 	 */
@@ -292,14 +307,16 @@ public class TransferBean {
 	}
 
 	// navigation to pages
-	
+
 	/**
 	 * navigation to the home page
+	 * 
 	 * @return
 	 */
-	public String navigateToHomePage(){
+	public String navigateToHomePage() {
 		return "welcomeBank";
 	}
+
 	/**
 	 * navigate to the list of subjects
 	 * 
@@ -356,41 +373,44 @@ public class TransferBean {
 	public String navigateToCreateSubject() {
 		return "createSubject";
 	}
-	
+
 	/**
 	 * navigate to the page to create a student
 	 * 
 	 * @return
 	 */
-	public String navigateToCreateStudent(){
+	public String navigateToCreateStudent() {
 		fillListClassesString();
 		return "createStudent";
 	}
-	
+
 	/**
 	 * navigate to the page to create a mark to a student
 	 * 
 	 * @return
 	 */
-	public String navigateToAddMarkToStudent(){
+	public String navigateToAddMarkToStudent() {
 		fillListSubjectString();
 		fillListStudentString();
 		return "addMarkToStudent";
 	}
-	
-	public String navigateToUpdateSubject(String id, String name){
-		System.out.println(id + " " + name);
+
+	public String navigateToUpdateSubject(String id, String name) {
 		idSubjectToUpdate = id;
 		nameSubjectToUpdate = name;
 		return "subjectUpdate";
 	}
-	
-	public String navigateToFormatError(){
+
+	public String navigateToFormatError() {
 		return "errorPageFormatting";
 	}
-	
-	public String navigateToErrorPage(){
+
+	public String navigateToErrorPage() {
 		return "errorpage";
+	}
+	
+	public String navigateToCreateClass(){
+		return "createClass";
 	}
 
 	// getters and setters
@@ -553,7 +573,6 @@ public class TransferBean {
 	public void setNameSubjectToUpdate(String nameSubjectToUpdate) {
 		this.nameSubjectToUpdate = nameSubjectToUpdate;
 	}
-	
 
 	/*
 	 * private List<Client> clients; private List<String> clientNames; private
