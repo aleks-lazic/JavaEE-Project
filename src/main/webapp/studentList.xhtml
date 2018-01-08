@@ -5,10 +5,10 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:outputLabel value="Students List"></h:outputLabel>
+		<h2>Students List</h2>
 		<br></br>
 		<ui:repeat var="item" value="#{transferBean.listStudents}">
-			<p>#{item.firstname} #{item.lastname} #{item.className.name}</p>
+			<h3>#{item.firstname} #{item.lastname} #{item.className.name}</h3>
 			<h:dataTable value="#{item.marks}" var="mark">
 				<h:column>
 					<f:facet name="header">Subject name</f:facet>
@@ -19,6 +19,7 @@
 			      #{mark.value}
 			   </h:column>
 			</h:dataTable>
+			<hr/>
 		</ui:repeat>
 		<br></br>
 		<h:form>

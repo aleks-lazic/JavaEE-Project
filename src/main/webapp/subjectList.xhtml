@@ -5,15 +5,21 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:outputLabel value="Subject List"></h:outputLabel>
+		<h2>Subject List</h2>
 		<br></br>
 		<ui:repeat var="item" value="#{transferBean.listSubjects}"
 			varStatus="myVarStatus">
-			<p>#{item.name}</p>
-			<h:form>
-				<h:commandButton value="Update subject"
-					action="#{transferBean.navigateToUpdateSubject(item.id, item.name)}"/>
-			</h:form>
+			<table>
+				<td>
+					<h3>#{item.name}</h3>
+				</td>
+				<td>
+					<h:form>
+						<h:commandButton value="Update subject"
+						action="#{transferBean.navigateToUpdateSubject(item.id, item.name)}"/>
+					</h:form>
+				</td>
+			</table>
 			<h:dataTable value="#{myVarStatus.index}" var="data">
 				<h:column>
 					<f:facet name="header">nbGrades</f:facet>
@@ -24,6 +30,7 @@
 			      #{transferBean.averageGradePerSubject[data]} 
 			   </h:column>
 			</h:dataTable>
+			<hr/>
 		</ui:repeat>
 		<h:form>
 			<p>

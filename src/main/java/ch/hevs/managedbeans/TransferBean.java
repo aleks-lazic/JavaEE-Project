@@ -167,8 +167,12 @@ public class TransferBean {
 	 * @return
 	 */
 	public String createSubject(String subjectName) {
-		if(!iSubject.insertSubject(subjectName)){
-			return navigateToErrorPage();
+		if(!subjectName.equals("")){
+			if(!iSubject.insertSubject(subjectName)){
+				return navigateToErrorPage();
+			}
+		}else {
+			return navigateToFormatError();
 		}
 		return navigateToListSubjects();
 	}
@@ -181,9 +185,14 @@ public class TransferBean {
 	 */
 	public String createStudent(String studentFirstname, String studentLastName) {
 		ClassName className = new ClassName();
-		className = iClassName.getClassByName(updatedClassString);
-		if(!iStudent.insertStudent(studentFirstname, studentLastName, className)){
-			return navigateToErrorPage();
+		
+		if (!studentFirstname.equals("") && !studentLastName.equals("")){
+			className = iClassName.getClassByName(updatedClassString);
+			if(!iStudent.insertStudent(studentFirstname, studentLastName, className)){
+				return navigateToErrorPage();
+			}
+		}else {
+			return navigateToFormatError();
 		}
 		return navigateToListStudents();
 	}
@@ -201,9 +210,13 @@ public class TransferBean {
 		String[] studentName = updatedStudentString.split(" ");
 		student = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
 		
-		double value = Double.parseDouble(mark);
-		if(!iStudent.createMark(subject, student, value)){
-			return navigateToErrorPage();
+		if(!mark.equals("")){
+			double value = Double.parseDouble(mark);
+			if(!iStudent.createMark(subject, student, value)){
+				return navigateToErrorPage();
+			}
+		} else {
+			return navigateToFormatError();
 		}
 		
 		return navigateToListStudents();
@@ -370,6 +383,10 @@ public class TransferBean {
 		idSubjectToUpdate = id;
 		nameSubjectToUpdate = name;
 		return "subjectUpdate";
+	}
+	
+	public String navigateToFormatError(){
+		return "errorPageFormatting";
 	}
 	
 	public String navigateToErrorPage(){

@@ -9,19 +9,33 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
     <ui:define name="content">
     	<h:form>
-        	<h:outputLabel value="Transfer Student:"></h:outputLabel>
+        	<h2>Transfer Student</h2>
         	<br></br>
-        	<h:panelGrid columns="5">
-        		<h:outputText value="student: "></h:outputText>
-	        	<h:selectOneMenu valueChangeListener="#{transferBean.updateStudent}">
-	        		<f:selectItems value="#{transferBean.listStudentsString}"/>
-	        	</h:selectOneMenu>
-	        	<h:outputText value="class: "></h:outputText>
-	        	<h:selectOneMenu valueChangeListener="#{transferBean.updateClass}">
-	        		<f:selectItems value="#{transferBean.listClassesString}"/>
-	        	</h:selectOneMenu>
-        	</h:panelGrid>
+        		<table>
+        			<tr>
+        				<th><h:outputText value="student"></h:outputText></th>
+        				<td>
+			        		<h:selectOneMenu valueChangeListener="#{transferBean.updateStudent}">
+			        			<f:selectItems value="#{transferBean.listStudentsString}"/>
+			        		</h:selectOneMenu>
+	        			</td>
+	        		</tr>
+	        		<tr>
+        				<th><h:outputText value="class"></h:outputText></th>
+	        			<td>
+	        				<h:selectOneMenu valueChangeListener="#{transferBean.updateClass}">
+			        		<f:selectItems value="#{transferBean.listClassesString}"/>
+			        		</h:selectOneMenu>	
+	        			</td>
+	        		</tr>
+	        	</table>
      		<h:commandButton value="transfer" action="#{transferBean.transferStudent}"></h:commandButton>
+     		
+     		<p>
+				<h:commandLink action="#{transferBean.navigateToListClasses}">
+					<h:outputText value="Back to class list" />
+				</h:commandLink>
+			</p>
         </h:form>
     </ui:define>
 </ui:composition>

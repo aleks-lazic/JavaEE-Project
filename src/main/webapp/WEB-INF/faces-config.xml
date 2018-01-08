@@ -73,5 +73,45 @@
 			<to-view-id>/transferStudent.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>transferStudent.xhtml</display-name>
+		<from-view-id>/transferStudent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/errorpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>subjectUpdate.xhtml</display-name>
+		<from-view-id>/subjectUpdate.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/errorpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>createSubject.xhtml</display-name>
+		<from-view-id>/createSubject.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/errorpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>createStudent.xhtml</display-name>
+		<from-view-id>/createStudent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/errorpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>addMarkToStudent.xhtml</display-name>
+		<from-view-id>/addMarkToStudent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/errorpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

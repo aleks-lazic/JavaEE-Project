@@ -5,12 +5,17 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:outputLabel value="Create new subject"></h:outputLabel>
+		<h2>Create new subject</h2>
 		<br></br>
 		<h:form>
 			<p>
 				<h:inputText binding="#{subjectName}" />
 				<h:commandButton value="create" action="#{transferBean.createSubject(subjectName.value)}"></h:commandButton>
+			</p>
+			<p>
+				<h:commandLink action="#{transferBean.navigateToListSubjects}">
+					<h:outputText value="Back to subject list" />
+				</h:commandLink>
 			</p>
 		</h:form>
 	</ui:define>
