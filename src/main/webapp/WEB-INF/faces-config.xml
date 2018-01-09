@@ -77,7 +77,7 @@
 		<display-name>transferStudent.xhtml</display-name>
 		<from-view-id>/transferStudent.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>error</from-outcome>
+			<from-outcome>errorpage</from-outcome>
 			<to-view-id>/errorpage.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -85,7 +85,7 @@
 		<display-name>subjectUpdate.xhtml</display-name>
 		<from-view-id>/subjectUpdate.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>error</from-outcome>
+			<from-outcome>errorpage</from-outcome>
 			<to-view-id>/errorpage.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -93,7 +93,7 @@
 		<display-name>createSubject.xhtml</display-name>
 		<from-view-id>/createSubject.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>error</from-outcome>
+			<from-outcome>errorpage</from-outcome>
 			<to-view-id>/errorpage.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -101,7 +101,7 @@
 		<display-name>createStudent.xhtml</display-name>
 		<from-view-id>/createStudent.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>error</from-outcome>
+			<from-outcome>errorpage</from-outcome>
 			<to-view-id>/errorpage.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
@@ -109,8 +109,64 @@
 		<display-name>addMarkToStudent.xhtml</display-name>
 		<from-view-id>/addMarkToStudent.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>error</from-outcome>
+			<from-outcome>errorpage</from-outcome>
 			<to-view-id>/errorpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>classList.xhtml</display-name>
+		<from-view-id>/classList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>createClass</from-outcome>
+			<to-view-id>/createClass.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>createClass.xhtml</display-name>
+		<from-view-id>/createClass.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>errorpage</from-outcome>
+			<to-view-id>/errorpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>createClass.xhtml</display-name>
+		<from-view-id>/createClass.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>errorPageFormatting</from-outcome>
+			<to-view-id>/errorPageFormatting.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>subjectUpdate.xhtml</display-name>
+		<from-view-id>/subjectUpdate.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>errorPageFormatting</from-outcome>
+			<to-view-id>/errorPageFormatting.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>createSubject.xhtml</display-name>
+		<from-view-id>/createSubject.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>errorPageFormatting</from-outcome>
+			<to-view-id>/errorPageFormatting.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>createStudent.xhtml</display-name>
+		<from-view-id>/createStudent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>errorPageFormatting</from-outcome>
+			<to-view-id>/errorPageFormatting.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>addMarkToStudent.xhtml</display-name>
+		<from-view-id>/addMarkToStudent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>errorPageFormatting</from-outcome>
+			<to-view-id>/errorPageFormatting.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
