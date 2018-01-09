@@ -205,28 +205,25 @@ public class TransferBean {
 		String[] studentName = updatedStudentString.split(" ");
 		student = iStudent.getStudentByFirstnameAndLastname(studentName[0], studentName[1]);
 
-		if (!mark.equals("")) {
-			double value = Double.parseDouble(mark);
-			if (!iStudent.createMark(subject, student, value)) {
-				return navigateToErrorPage();
-			}
-		} else {
+		if (mark.equals(""))
 			return navigateToFormatError();
-		}
+
+		double value = Double.parseDouble(mark);
+		if (!iStudent.createMark(subject, student, value))
+			return navigateToErrorPage();
 
 		return navigateToListStudents();
 	}
 
 	public String createClass(String className) {
-		if (!className.equals("")) {
-			if (!iClassName.insertClass(className)) {
-				return navigateToErrorPage();
-			} else {
-				return navigateToListClasses();
-			}
-		} else {
+		if (className.equals(""))
 			return navigateToFormatError();
-		}
+
+		if (!iClassName.insertClass(className))
+			return navigateToErrorPage();
+
+		return navigateToListClasses();
+
 	}
 
 	/**
@@ -237,16 +234,19 @@ public class TransferBean {
 	 */
 	public String deleteClass(String classID) {
 		ClassName className = iClassName.getClassName(Long.parseLong(classID));
-		if (!iClassName.deleteById(className)) {
+		if (!iClassName.deleteById(className))
 			return navigateToErrorPage();
-		}
+
 		return navigateToListClasses();
 	}
 
 	public String updateSubjectDB(String newSubjectName) {
-		if (!iSubject.updateSubject(Long.parseLong(idSubjectToUpdate), newSubjectName)) {
+		if (newSubjectName.equals(""))
+			return navigateToFormatError();
+
+		if (!iSubject.updateSubject(Long.parseLong(idSubjectToUpdate), newSubjectName))
 			return navigateToErrorPage();
-		}
+
 		return navigateToListSubjects();
 	}
 

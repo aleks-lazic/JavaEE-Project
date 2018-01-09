@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14141592409490" configfile="/JavaEE-Project/src/main/webapp/WEB-INF/faces-config.xml">
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14141592409490" configfile="/TP12-WEB-EJB-PC-EPC-E-donnee/src/main/webapp/WEB-INF/faces-config.xml">
   <nodes xsi:type="pageflow:PFPage" name="welcomeBank.xhtml" x="24" y="300" id="pf15149926336560" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf15151621805761 pf15151621805760 pf151516292543414" path="/welcomeBank.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="studentList.xhtml" x="384" y="576" id="pf15151621805773" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" outlinks="pf15151621805774 pf15151621805775" inlinks="pf15151621805760" path="/studentList.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="subjectList.xhtml" x="386" y="300" id="pf15151621805776" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf15151621805777 pf15151621805778" inlinks="pf15151621805761" path="/subjectList.xhtml"/>
@@ -10,17 +10,17 @@
   <nodes xsi:type="pageflow:PFPage" name="createStudent.xhtml" x="699" y="492" id="pf151516218057713" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf15154139474774" inlinks="pf15151621805774" path="/createStudent.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="classList.xhtml" x="394" y="156" id="pf151516292543415" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf151516296231716" inlinks="pf151516292543414" path="/classList.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="errorpage.xhtml" x="1008" y="360" id="pf15154139474775" inlinks="pf15154139474760 pf15154139474762 pf15154139474761 pf15154139474774 pf15154139474773" path="/errorpage.xhtml"/>
-  <links id="pf15151621805761" target="pf15151621805776" source="pf15149926336560" outcome="subjectList"/>
-  <links id="pf15151621805777" target="pf151516218057711" source="pf15151621805776" outcome="subjectUpdate"/>
-  <links id="pf15151621805778" target="pf151516218057710" source="pf15151621805776" outcome="createSubject"/>
-  <links id="pf15151621805774" target="pf151516218057713" source="pf15151621805773" outcome="createStudent"/>
-  <links id="pf15151621805775" target="pf151516218057712" source="pf15151621805773" outcome="addMarkToStudent"/>
-  <links id="pf15151621805760" target="pf15151621805773" source="pf15149926336560" outcome="studentList"/>
-  <links id="pf151516292543414" target="pf151516292543415" source="pf15149926336560" outcome="classList"/>
-  <links id="pf151516296231716" target="pf15151621805779" source="pf151516292543415" outcome="transferStudent"/>
-  <links id="pf15154139474760" target="pf15154139474775" source="pf15151621805779" outcome="error"/>
-  <links id="pf15154139474762" target="pf15154139474775" source="pf151516218057711" outcome="error"/>
-  <links id="pf15154139474761" target="pf15154139474775" source="pf151516218057710" outcome="error"/>
-  <links id="pf15154139474774" target="pf15154139474775" source="pf151516218057713" outcome="error"/>
-  <links id="pf15154139474773" target="pf15154139474775" source="pf151516218057712" outcome="error"/>
+  <links id="pf15151621805761" target="pf15151621805776" source="pf15149926336560"/>
+  <links id="pf15151621805777" target="pf151516218057711" source="pf15151621805776"/>
+  <links id="pf15151621805778" target="pf151516218057710" source="pf15151621805776"/>
+  <links id="pf15151621805774" target="pf151516218057713" source="pf15151621805773"/>
+  <links id="pf15151621805775" target="pf151516218057712" source="pf15151621805773"/>
+  <links id="pf15151621805760" target="pf15151621805773" source="pf15149926336560"/>
+  <links id="pf151516292543414" target="pf151516292543415" source="pf15149926336560"/>
+  <links id="pf151516296231716" target="pf15151621805779" source="pf151516292543415"/>
+  <links id="pf15154139474760" target="pf15154139474775" source="pf15151621805779"/>
+  <links id="pf15154139474762" target="pf15154139474775" source="pf151516218057711"/>
+  <links id="pf15154139474761" target="pf15154139474775" source="pf151516218057710"/>
+  <links id="pf15154139474774" target="pf15154139474775" source="pf151516218057713"/>
+  <links id="pf15154139474773" target="pf15154139474775" source="pf151516218057712"/>
 </pageflow:Pageflow>
